@@ -1,0 +1,79 @@
+stages:
+  - docker
+
+
+build-api:
+  image: docker
+  services:
+    - name: docker:dind
+      alias: thedockerhost
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  stage: docker
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:api -f docker/api/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE:api
+    - docker image rm $CI_REGISTRY_IMAGE:api
+    - docker builder prune -af
+  only:
+    - fork
+
+build-admin:
+  image: docker
+  services:
+    - name: docker:dind
+      alias: thedockerhost
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  stage: docker
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:admin -f docker/admin/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE:admin
+    - docker image rm $CI_REGISTRY_IMAGE:admin
+    - docker builder prune -af
+  only:
+    - fork
+
+build-websocket:
+  image: docker
+  services:
+    - name: docker:dind
+      alias: thedockerhost
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  stage: docker
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:websocket -f docker/websocket/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE:websocket
+    - docker image rm $CI_REGISTRY_IMAGE:websocket
+    - docker builder prune -af
+  only:
+    - fork
+
+build-pass:
+  image: docker
+  services:
+    - name: docker:dind
+      alias: thedockerhost
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  stage: docker
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:pass -f docker/pass/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE:pass
+    - docker image rm $CI_REGISTRY_IMAGE:pass
+    - docker builder prune -af
+  only:
+    - fork
