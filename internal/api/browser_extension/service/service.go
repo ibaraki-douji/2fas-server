@@ -13,6 +13,8 @@ import (
 	"github.com/twofas/2fas-server/internal/api/browser_extension/app/query"
 	apisec "github.com/twofas/2fas-server/internal/api/browser_extension/app/security"
 	"github.com/twofas/2fas-server/internal/api/browser_extension/ports"
+	"github.com/twofas/2fas-server/internal/api/mobile/domain"
+	"github.com/twofas/2fas-server/internal/common/storage"
 	"github.com/twofas/2fas-server/internal/common/db"
 	mobile "github.com/twofas/2fas-server/internal/common/push"
 	"github.com/twofas/2fas-server/internal/common/rate_limit"
@@ -40,7 +42,15 @@ func NewBrowserExtensionModule(
 	browserExtension2FaRequestRepository := adapters.NewBrowserExtension2FaRequestsMysqlRepository(gorm)
 	pairedDevicesRepository := adapters.NewBrowserExtensionDevicesMysqlRepository(gorm, queryBuilder)
 
-	var pushClient mobile.Pusher = mobile.NewFakePushClient()
+	var pushClient mobile.Pusher
+
+	if config.IsTestingEnv() {
+		pushClient = mobile.NewFakePushClient()
+	} else {
+		storage := storage.NewTmpFileSystem()
+		pushConfig := domain.NewFcmPushConfig(storage)
+		pushClient = mobile.NewFcmPushClient(pushConfig)
+	}
 
 	cqrs := &app.Cqrs{
 		Commands: app.Commands{
