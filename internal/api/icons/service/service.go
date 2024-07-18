@@ -11,7 +11,6 @@ import (
 	"github.com/twofas/2fas-server/internal/api/icons/app/command"
 	"github.com/twofas/2fas-server/internal/api/icons/app/queries"
 	"github.com/twofas/2fas-server/internal/api/icons/ports"
-	"github.com/twofas/2fas-server/internal/common/aws"
 	"github.com/twofas/2fas-server/internal/common/db"
 	httpsec "github.com/twofas/2fas-server/internal/common/http"
 	"github.com/twofas/2fas-server/internal/common/storage"

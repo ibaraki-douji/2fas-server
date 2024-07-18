@@ -12,7 +12,6 @@ import (
 	"github.com/twofas/2fas-server/internal/api/support/app/queries"
 	"github.com/twofas/2fas-server/internal/api/support/domain"
 	"github.com/twofas/2fas-server/internal/api/support/ports"
-	"github.com/twofas/2fas-server/internal/common/aws"
 	"github.com/twofas/2fas-server/internal/common/clock"
 	"github.com/twofas/2fas-server/internal/common/db"
 	"github.com/twofas/2fas-server/internal/common/storage"
