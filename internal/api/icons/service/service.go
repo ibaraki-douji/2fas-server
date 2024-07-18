@@ -27,13 +27,7 @@ type IconsModule struct {
 func NewIconsModule(config config.Configuration, gorm *gorm.DB, database *sql.DB, validate *validator.Validate) *IconsModule {
 	queryBuilder := db.NewQueryBuilder(database)
 
-	var iconsStorage storage.FileSystemStorage
-
-	if config.IsTestingEnv() {
-		iconsStorage = storage.NewTmpFileSystem()
-	} else {
-		iconsStorage = aws.NewAwsS3(config.Aws.Region, config.Aws.S3AccessKeyId, config.Aws.S3AccessSecretKey)
-	}
+	var iconsStorage storage.FileSystemStorage = storage.NewTmpFileSystem()
 
 	webServicesRepository := adapters.NewWebServiceMysqlRepository(gorm)
 	iconsRepository := adapters.NewIconMysqlRepository(gorm)

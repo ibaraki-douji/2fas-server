@@ -42,15 +42,7 @@ func NewBrowserExtensionModule(
 	browserExtension2FaRequestRepository := adapters.NewBrowserExtension2FaRequestsMysqlRepository(gorm)
 	pairedDevicesRepository := adapters.NewBrowserExtensionDevicesMysqlRepository(gorm, queryBuilder)
 
-	var pushClient mobile.Pusher
-
-	if config.IsTestingEnv() {
-		pushClient = mobile.NewFakePushClient()
-	} else {
-		s3 := aws.NewAwsS3(config.Aws.Region, config.Aws.S3AccessKeyId, config.Aws.S3AccessSecretKey)
-		pushConfig := domain.NewFcmPushConfig(s3)
-		pushClient = mobile.NewFcmPushClient(pushConfig)
-	}
+	var pushClient mobile.Pusher = mobile.NewFakePushClient()
 
 	cqrs := &app.Cqrs{
 		Commands: app.Commands{

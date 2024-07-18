@@ -30,13 +30,7 @@ func NewSupportModule(config config.Configuration, gorm *gorm.DB, database *sql.
 
 	debugLogsConfig := domain.LoadDebugLogsConfig()
 
-	var debugLogsStorage storage.FileSystemStorage
-
-	if config.IsTestingEnv() {
-		debugLogsStorage = storage.NewTmpFileSystem()
-	} else {
-		debugLogsStorage = aws.NewAwsS3(debugLogsConfig.AwsRegion, debugLogsConfig.AwsAccessKeyId, debugLogsConfig.AwsSecretAccessKey)
-	}
+	var debugLogsStorage storage.FileSystemStorage = storage.NewTmpFileSystem()
 
 	debugLogsAuditRepository := adapters.NewDebugLogsAuditMysqlRepository(gorm)
 
