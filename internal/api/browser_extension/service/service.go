@@ -13,7 +13,6 @@ import (
 	"github.com/twofas/2fas-server/internal/api/browser_extension/app/query"
 	apisec "github.com/twofas/2fas-server/internal/api/browser_extension/app/security"
 	"github.com/twofas/2fas-server/internal/api/browser_extension/ports"
-	"github.com/twofas/2fas-server/internal/api/mobile/domain"
 	"github.com/twofas/2fas-server/internal/common/db"
 	mobile "github.com/twofas/2fas-server/internal/common/push"
 	"github.com/twofas/2fas-server/internal/common/rate_limit"
