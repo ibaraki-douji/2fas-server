@@ -10,6 +10,7 @@ import (
 	"github.com/twofas/2fas-server/internal/api/support/app"
 	"github.com/twofas/2fas-server/internal/api/support/app/command"
 	"github.com/twofas/2fas-server/internal/api/support/app/queries"
+	"github.com/twofas/2fas-server/internal/api/support/domain"
 	"github.com/twofas/2fas-server/internal/api/support/ports"
 	"github.com/twofas/2fas-server/internal/common/clock"
 	"github.com/twofas/2fas-server/internal/common/db"
