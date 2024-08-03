@@ -10,7 +10,7 @@ services:
       - '1000'
     volumes:
       - go-modules:/go/pkg/mod
-      - shared-volume:/tmp/2fas
+      - shared-volume:/tmp/2fas # don't forget to add the firebase service account here : `/tmp/2fas/2fas-api/service_account_key.json`
     ports:
       - "80:8080"
     env_file:
